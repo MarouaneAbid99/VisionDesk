@@ -1,0 +1,29 @@
+# Render.com Blueprint for VisionDesk API
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: visiondesk-api
+    runtime: node
+    region: frankfurt # or closest to your users
+    plan: starter # $7/month
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false # Set manually in dashboard
+      - key: JWT_SECRET
+        generateValue: true # Auto-generate secure secret
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: CORS_ORIGINS
+        sync: false # Set manually: https://<optician>.vercel.app,https://<superadmin>.vercel.app
+      - key: UPLOAD_DIR
+        value: /var/data/uploads
+    disk:
+      name: uploads
+      mountPath: /var/data/uploads
+      sizeGB: 1

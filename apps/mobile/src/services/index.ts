@@ -1,0 +1,14 @@
+export { default as api } from './api';
+export * from './auth';
+export * from './panorama';
+export * from './desk';
+export * from './clients';
+export * from './orders';
+export * from './atelier';
+export { stockService } from './stock';
+export { suppliersService } from './suppliers';
+export type { SupplierBusinessMetrics, SupplierMetricsPeriod } from './suppliers';
+export { notificationsService } from './notifications';
+export type { Notification } from './notifications';
+export * from './appointments';
+export * from './prescriptions';

@@ -1,0 +1,30 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.cursor/
+
+# Dependencies
+**/node_modules/
+
+# Build outputs
+**/dist/
+**/.vercel/
+coverage/
+
+# Environment files (keep templates)
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.production.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime / uploads
+apps/api/uploads/
+
+# Expo local state
+apps/mobile/.expo/

@@ -1,0 +1,26 @@
+diff --git a/node_modules/expo-asset/build/AssetUris.js b/node_modules/expo-asset/build/AssetUris.js
+index 54cc343..9a27049 100644
+--- a/node_modules/expo-asset/build/AssetUris.js
++++ b/node_modules/expo-asset/build/AssetUris.js
+@@ -42,16 +42,11 @@ export function getManifestBaseUrl(manifestUrl) {
+     else if (nextProtocol === 'exps:') {
+         nextProtocol = 'https:';
+     }
+-    urlObject.protocol = nextProtocol;
+     // Trim filename, query parameters, and fragment, if any
+     const directory = urlObject.pathname.substring(0, urlObject.pathname.lastIndexOf('/') + 1);
+-    urlObject.pathname = directory;
+-    urlObject.search = '';
+-    urlObject.hash = '';
+-    // The URL spec doesn't allow for changing the protocol to `http` or `https`
+-    // without a port set so instead, we'll just swap the protocol manually.
+-    return urlObject.protocol !== nextProtocol
+-        ? urlObject.href.replace(urlObject.protocol, nextProtocol)
+-        : urlObject.href;
++    // Build the URL string manually to avoid protocol assignment error
++    // (URL.protocol is read-only in React Native)
++    const port = urlObject.port ? ':' + urlObject.port : '';
++    return nextProtocol + '//' + urlObject.hostname + port + directory;
+ }
+ //# sourceMappingURL=AssetUris.js.map
+\ No newline at end of file
