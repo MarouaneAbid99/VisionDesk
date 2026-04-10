@@ -29,6 +29,7 @@ import { documentsRouter } from './modules/documents/documents.routes.js';
 import { automationRouter } from './modules/automation/automation.routes.js';
 import logger from './lib/logger.js';
 import { UPLOAD_DIR } from './middleware/upload.js';
+import { initializeDatabase } from './lib/database-init.js';
 
 dotenv.config();
 
@@ -131,8 +132,17 @@ process.on('unhandledRejection', (reason) => {
   logger.error({ reason }, 'Unhandled rejection');
 });
 
-app.listen(PORT, () => {
-  logger.info({ port: PORT }, '🚀 VisionDesk API started');
-});
+// Initialize database and start server
+(async () => {
+  try {
+    await initializeDatabase();
+  } catch (error) {
+    logger.warn({ error }, 'Database initialization completed with warnings');
+  }
+
+  app.listen(PORT, () => {
+    logger.info({ port: PORT }, '🚀 VisionDesk API started');
+  });
+})();
 
 export default app;
